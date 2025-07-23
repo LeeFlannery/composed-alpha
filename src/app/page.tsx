@@ -1,103 +1,159 @@
-import Image from "next/image";
+import { Suspense } from 'react';
+import HeroCard from '@/components/HeroCard';
+import PortfolioGrid from '@/components/PortfolioGrid';
+
+// Demo data - replace with Storyblok data in production
+const demoProfile = {
+  content: {
+    name: 'Alex Rivera',
+    title: 'Full-Stack Developer & Game Designer',
+    bio: 'Passionate creator building innovative digital experiences. Specializing in React, Node.js, and Unity game development with 5+ years of experience shipping products that users love.',
+    avatar: {
+      filename:
+        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
+      alt: 'Alex Rivera',
+    },
+    social_links: [
+      { platform: 'GitHub', url: 'https://github.com/alexrivera', username: 'alexrivera' },
+      { platform: 'Twitter', url: 'https://twitter.com/alexrivera', username: '@alexrivera' },
+      { platform: 'LinkedIn', url: 'https://linkedin.com/in/alexrivera', username: 'alexrivera' },
+    ],
+    location: 'San Francisco, CA',
+    skills: ['React', 'TypeScript', 'Node.js', 'Unity', 'Python', 'AWS', 'PostgreSQL'],
+  },
+};
+
+const demoPortfolios = [
+  {
+    id: 'cosmic-runner',
+    content: {
+      title: 'Cosmic Runner',
+      description:
+        'An endless runner game built with Unity featuring procedural level generation and smooth physics-based movement. Published on mobile platforms with over 100K downloads.',
+      screenshot: {
+        filename:
+          'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=400&h=300&fit=crop',
+        alt: 'Cosmic Runner Screenshot',
+      },
+      stats: [
+        { label: 'Downloads', value: '150000', type: 'number' as const },
+        { label: 'Rating', value: '4.5', type: 'number' as const },
+        { label: 'Revenue', value: '25000', type: 'currency' as const },
+      ],
+      technologies: ['Unity', 'C#', 'Firebase', 'Unity Analytics'],
+      links: [
+        { type: 'app_store' as const, url: 'https://apps.apple.com/app/cosmic-runner' },
+        { type: 'play_store' as const, url: 'https://play.google.com/store/apps/cosmic-runner' },
+      ],
+      category: 'game' as const,
+      featured: true,
+      launch_date: '2023-08-15',
+    },
+  },
+  {
+    id: 'task-flow',
+    content: {
+      title: 'TaskFlow Pro',
+      description:
+        'A modern project management web application built with React and Node.js. Features real-time collaboration, advanced analytics, and intuitive drag-and-drop interfaces.',
+      screenshot: {
+        filename:
+          'https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=400&h=300&fit=crop',
+        alt: 'TaskFlow Pro Screenshot',
+      },
+      stats: [
+        { label: 'Active Users', value: '5000', type: 'number' as const },
+        { label: 'Task Completion', value: '94.2', type: 'percentage' as const },
+        { label: 'MRR', value: '12000', type: 'currency' as const },
+      ],
+      technologies: ['React', 'TypeScript', 'Node.js', 'PostgreSQL', 'Socket.io'],
+      links: [
+        { type: 'website' as const, url: 'https://taskflow-pro.com' },
+        { type: 'github' as const, url: 'https://github.com/alexrivera/taskflow-pro' },
+      ],
+      category: 'app' as const,
+      featured: true,
+      launch_date: '2023-05-20',
+    },
+  },
+  {
+    id: 'portfolio-showcase',
+    content: {
+      title: 'Developer Portfolio Platform',
+      description:
+        "The very platform you're viewing! A modern portfolio showcase built with Next.js, Storyblok, and composable UI components. Features dynamic content management and beautiful animations.",
+      screenshot: {
+        filename:
+          'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop',
+        alt: 'Portfolio Platform Screenshot',
+      },
+      stats: [
+        { label: 'Page Views', value: '50000', type: 'number' as const },
+        { label: 'Load Speed', value: '98', type: 'percentage' as const },
+        { label: 'Conversion', value: '15.8', type: 'percentage' as const },
+      ],
+      technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Storyblok', 'Framer Motion'],
+      links: [
+        { type: 'website' as const, url: '#' },
+        { type: 'github' as const, url: 'https://github.com/alexrivera/composed-alpha' },
+      ],
+      category: 'website' as const,
+      featured: false,
+      launch_date: '2024-01-10',
+    },
+  },
+];
 
 export default function Home() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <main className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
+      <div className="container mx-auto px-4 py-8 max-w-6xl">
+        {/* Hero Section */}
+        <section className="mb-12">
+          <Suspense
+            fallback={
+              <div className="w-full h-96 bg-gradient-to-r from-slate-100 to-slate-200 rounded-2xl animate-pulse" />
+            }
+          >
+            <HeroCard profile={demoProfile} />
+          </Suspense>
+        </section>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+        {/* Portfolio Section */}
+        <section>
+          <Suspense
+            fallback={
+              <div className="space-y-6">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="bg-white rounded-xl h-64 animate-pulse" />
+                ))}
+              </div>
+            }
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            <PortfolioGrid portfolios={demoPortfolios} />
+          </Suspense>
+        </section>
+      </div>
+
+      {/* Footer */}
+      <footer className="border-t border-gray-200 bg-white/50 backdrop-blur-sm mt-16">
+        <div className="container mx-auto px-4 py-8 max-w-6xl">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-gray-600 text-sm">
+              Built with Next.js, Storyblok, and modern web technologies
+            </p>
+            <div className="flex items-center gap-6 text-sm text-gray-500">
+              <span>© 2024 Composed Alpha</span>
+              <a href="#" className="hover:text-gray-700 transition-colors">
+                Privacy
+              </a>
+              <a href="#" className="hover:text-gray-700 transition-colors">
+                Terms
+              </a>
+            </div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
       </footer>
-    </div>
+    </main>
   );
 }
